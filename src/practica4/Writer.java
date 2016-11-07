@@ -13,7 +13,7 @@ import java.io.FileWriter;
  *
  * @author Marco
  */
-public class Writer extends Thread {
+public class Writer<E> extends Thread {
 
     Queue que;
     File file;
@@ -26,7 +26,8 @@ public class Writer extends Thread {
 
     @Override
     public void run() {
-        Object str = que.top();
+        Node<E> nodo = que.cola;
+        E str = nodo.cargaUtil;
         BufferedWriter writer = null;
         try {
             FileWriter fw = new FileWriter(file);
@@ -41,7 +42,13 @@ public class Writer extends Thread {
             } catch (Exception e) {
             }
         }
-        que.pop();
+        if (nodo.contador >= 1) {
+            nodo.contador = 0;
+            que.pop();
+        } else {
+            nodo.contador++;
+        }
+
     }
 
 }
