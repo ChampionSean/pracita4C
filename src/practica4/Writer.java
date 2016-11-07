@@ -8,6 +8,8 @@ package practica4;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -46,6 +48,11 @@ public class Writer<E> extends Thread {
             nodo.contador = 0;
             que.pop();
         } else {
+            try {
+                Writer.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
+            }
             nodo.contador++;
         }
 
