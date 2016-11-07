@@ -5,43 +5,43 @@
  */
 package practica4;
 
-import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileWriter;
 
 /**
  *
  * @author Marco
  */
-public class Writer extends Thread{
-    
+public class Writer extends Thread {
+
     Queue que;
     File file;
-    
-    public Writer(Queue q, File f){
+
+    public Writer(Queue q, File f) {
         this.que = q;
         this.file = f;
-        
+
     }
-    
+
     @Override
-    public void run(){
-                BufferedReader reader = null;
+    public void run() {
+        Object str = que.top();
+        BufferedWriter writer = null;
         try {
-            String s;
-            reader = new BufferedReader(new FileReader(file));
-            while ((s = reader.readLine()) != null) {
-                que.push(s);
-            }
+            FileWriter fw = new FileWriter(file);
+            writer = new BufferedWriter(fw);
+            writer.write((char[]) str);
         } catch (Exception e) {
         } finally {
             try {
-                if (reader != null) {
-                    reader.close();
+                if (writer != null) {
+                    writer.close();
                 }
             } catch (Exception e) {
             }
         }
+        que.pop();
     }
-    
+
 }
