@@ -31,6 +31,7 @@ public class Writer extends Thread{
             String s;
             reader = new BufferedReader(new FileReader(file));
             while ((s = reader.readLine()) != null) {
+                que.push(s);
             }
         } catch (Exception e) {
         } finally {
