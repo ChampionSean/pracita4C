@@ -5,6 +5,9 @@
  */
 package practica4;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 import java.io.File;
 
 /**
@@ -23,7 +26,22 @@ public class Reader extends Thread {
     
     @Override
     public void run(){
-        
+                        BufferedReader reader = null;
+        try {
+            String s;
+            reader = new BufferedReader(new FileReader(file));
+            while ((s = reader.readLine()) != null) {
+                que.push(s);
+            }
+        } catch (Exception e) {
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (Exception e) {
+            }
+        }
     }
     
 }
