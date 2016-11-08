@@ -33,24 +33,50 @@ public class Queue<E> implements ADTConcurrentQueue {
     
     
     public void push(E payload){
-        int local = cola.etiqueta.get();
+       int local = cola.etiqueta.get();
         E localValue = cola.cargaUtil;
         
-                if(cola.etiqueta.incrementAndGet() == ++local){
-
+                if(cola.etiqueta.incrementAndGet() == ++local){                    
+                    Node p = new Node<>(payload);
+                    if(dummy.siguiente.get() == null){
+                        dummy.siguiente.compareAndSet(null, p);
+                        p.siguiente.set(cola);
+                        size.getAndAdd(1);
+                    }else{
+                        aux(dummy).siguiente.compareAndSet(cola, p);
+                        p.siguiente.set(cola);
+                        size.getAndAdd(1);
+                    }
                 } else {
                         push(payload);
                 }
     }
     
-    public E pop(){
-        if(size.getAndDecrement() < 1) {
-             size.set(0);
-             return null;
+    private Node<E> aux(Node<E> n){
+        if(n.siguiente.get() != cola){
+            return aux(n.siguiente.get());
+        }else{
+            return n;
         }
-        Node<E> primero = dummy.siguiente.get();
-       dummy.siguiente.compareAndSet(primero, primero.siguiente.get());
-       return primero.cargaUtil;
+    }
+    
+    public E pop(){
+        if(size.get() == 0){
+            return null;
+        }else{
+            if(size.get() == 1){
+                Node<E> primero = dummy.siguiente.get();
+                dummy.siguiente.compareAndSet(primero, null);
+                dummy = cola;
+                size.getAndDecrement();
+                return primero.cargaUtil;
+            }else{
+                Node<E> primero = dummy.siguiente.get();
+                dummy.siguiente.compareAndSet(primero, primero.siguiente.get());
+                size.getAndDecrement();
+                return primero.cargaUtil;
+            }
+        }
        }
        
     public E top() {

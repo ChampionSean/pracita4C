@@ -165,6 +165,7 @@ if (result == JFileChooser.APPROVE_OPTION) {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 //Aqui empieza todo el desvergue.       
         Queue q = new Queue<String>();
+        q.push("ODI DOE");
         Reader r = new Reader(q,lectura);
         Writer w1 = new Writer(q,escritura1);
         Writer w2 = new Writer(q,escritura2);

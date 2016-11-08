@@ -44,8 +44,9 @@ public class Writer<E> extends Thread {
             } catch (Exception e) {
             }
         }
-        if (nodo.contador >= 1) {
-            nodo.contador = 0;
+        if (nodo != null){
+        if (nodo.contador.get() >= 1) {
+            nodo.contador.set(0);
             que.pop();
         } else {
             try {
@@ -53,7 +54,8 @@ public class Writer<E> extends Thread {
             } catch (InterruptedException ex) {
                 Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            nodo.contador++;
+            nodo.contador.getAndIncrement();
+        }
         }
 
     }

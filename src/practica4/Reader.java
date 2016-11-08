@@ -26,7 +26,7 @@ public class Reader extends Thread {
     
     @Override
     public void run(){
-                        BufferedReader reader = null;
+        BufferedReader reader = null;
         try {
             String s;
             reader = new BufferedReader(new FileReader(file));

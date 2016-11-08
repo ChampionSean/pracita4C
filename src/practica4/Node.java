@@ -18,9 +18,11 @@ public class Node<E> {
     AtomicReference<Node<E>> siguiente;
     AtomicInteger etiqueta;
     E cargaUtil;
+    AtomicInteger contador;
     
     // TODO IMPLEMENT
     public Node(){
+        contador = new AtomicInteger(0);
         
     }
     
@@ -28,6 +30,7 @@ public class Node<E> {
 		siguiente = new AtomicReference<>();
 		cargaUtil = cargaU;
 		etiqueta = new AtomicInteger();
+                contador = new AtomicInteger(0);
     }
     
     // siguiente.compareAndSet(null);
